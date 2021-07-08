@@ -1,0 +1,42 @@
+/**
+ * Created by GoLand.
+ * @author: clyde
+ * @date: 2021/7/8 下午1:54
+ * @note:
+ */
+
+package config
+
+import (
+	"github.com/spf13/viper"
+	"log"
+)
+
+type Config struct {
+	Port       int    // listen port
+	Proto      string // listen protocol
+	CertFile   string // path to certificate file
+	KeyFile    string // path to certificate key file
+}
+
+func NewConfig() *Config {
+	v := viper.New()
+	v.SetDefault("port", 8888)
+	v.SetDefault("proto", "https")
+	v.SetDefault("certFile", "./tls/server.pem")
+	v.SetDefault("KeyFile", "./tls/server.key")
+	v.AddConfigPath("./etc/")
+	v.AddConfigPath("/etc/")
+	v.SetConfigName("http-proxy")
+	v.SetConfigType("yml")
+	if err := v.ReadInConfig(); err != nil {
+		log.Printf("[config] Read config err: %v, use default settings", err)
+	}
+
+	var cfg Config
+	if err := v.Unmarshal(&cfg); err != nil {
+		log.Fatalf("[config] Unmarshal config err: %+v", err)
+	}
+
+	return &cfg
+}

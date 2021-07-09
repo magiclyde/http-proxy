@@ -1,0 +1,4 @@
+port: 8888
+proto: "https"
+certFile: "./assets/tls/server.pem"
+keyFile: "./assets/tls/server.key"

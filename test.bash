@@ -23,4 +23,4 @@ cleanup() {
 trap cleanup INT TERM EXIT
 
 #curl -x http://localhost:8888 "https://httpbin.org/get"
-curl -Lv -m 30 --proxy https://localhost:8888 --proxy-cacert ./tls/server.pem "https://httpbin.org/get"
+curl -Lv -m 30 --proxy https://localhost:8888 --proxy-cacert ./assets/tls/server.pem "https://httpbin.org/get"

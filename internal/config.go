@@ -1,11 +1,11 @@
 /**
  * Created by GoLand.
  * @author: clyde
- * @date: 2021/7/8 下午1:54
+ * @date: 2021/7/9 下午5:37
  * @note:
  */
 
-package config
+package internal
 
 import (
 	"github.com/spf13/viper"
@@ -13,18 +13,18 @@ import (
 )
 
 type Config struct {
-	Port       int    // listen port
-	Proto      string // listen protocol
-	CertFile   string // path to certificate file
-	KeyFile    string // path to certificate key file
+	Port     int    // listen port
+	Proto    string // listen protocol
+	CertFile string // path to certificate file
+	KeyFile  string // path to certificate key file
 }
 
 func NewConfig() *Config {
 	v := viper.New()
 	v.SetDefault("port", 8888)
 	v.SetDefault("proto", "https")
-	v.SetDefault("certFile", "./tls/server.pem")
-	v.SetDefault("KeyFile", "./tls/server.key")
+	v.SetDefault("certFile", "./assets/tls/server.pem")
+	v.SetDefault("KeyFile", "./assets/tls/server.key")
 	v.AddConfigPath("./etc/")
 	v.AddConfigPath("/etc/")
 	v.SetConfigName("http-proxy")

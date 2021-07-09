@@ -13,3 +13,11 @@ http-proxy:
 .PHONY: clean
 clean:
 	rm -f ./bin/http-proxy
+
+.PHONY: docker-build
+docker-build:
+	docker build -t http-proxy:1.0 .
+
+.PHONY: docker-run
+docker-run:
+	docker run -p 8888:8888 http-proxy:1.0

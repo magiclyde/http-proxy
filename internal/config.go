@@ -24,7 +24,7 @@ func NewConfig() *Config {
 	v.SetDefault("port", 8888)
 	v.SetDefault("proto", "https")
 	v.SetDefault("certFile", "./assets/tls/server.pem")
-	v.SetDefault("KeyFile", "./assets/tls/server.key")
+	v.SetDefault("keyFile", "./assets/tls/server.key")
 	v.AddConfigPath("./etc/")
 	v.AddConfigPath("/etc/")
 	v.SetConfigName("http-proxy")

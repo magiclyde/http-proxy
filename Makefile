@@ -1,7 +1,8 @@
 
-UPX:=$(shell which upx)
 COMMIT_HASH=$(shell git rev-parse --short HEAD || echo "GitNotFound")
 BUILD_DATE=$(shell date '+%Y-%m-%d %H:%M:%S')
+UPX:=$(shell which upx)
+PWD:=$(shell pwd)
 
 all: http-proxy
 
@@ -20,4 +21,4 @@ docker-build:
 
 .PHONY: docker-run
 docker-run:
-	docker run -p 8888:8888 http-proxy:1.0
+	docker run -p 8888:8888 -v "${PWD}/etc:/app/etc" -v "${PWD}/assets/tls:/app/assets/tls" http-proxy:1.0

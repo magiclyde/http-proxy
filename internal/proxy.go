@@ -35,7 +35,7 @@ func handleHttp(w http.ResponseWriter, r *http.Request) {
 	transport := http.DefaultTransport
 	resp, err := transport.RoundTrip(outReq)
 	if err != nil {
-		log.Printf("[proxy] transport.RoundTrip err: %+v", err)
+		log.Printf("transport.RoundTrip err: %+v", err)
 		http.Error(w, err.Error(), http.StatusServiceUnavailable)
 		return
 	}
@@ -59,7 +59,7 @@ func handleTunneling(w http.ResponseWriter, r *http.Request) {
 	//设置超时防止大量超时导致服务器资源不大量占用
 	dest_conn, err := net.DialTimeout("tcp", r.Host, 10*time.Second)
 	if err != nil {
-		log.Printf("[proxy] net.DialTimeout err: %+v", err)
+		log.Printf("net.DialTimeout err: %+v", err)
 		http.Error(w, err.Error(), http.StatusServiceUnavailable)
 		return
 	}
@@ -68,7 +68,7 @@ func handleTunneling(w http.ResponseWriter, r *http.Request) {
 	//类型转换
 	hijacker, ok := w.(http.Hijacker)
 	if !ok {
-		log.Println("[proxy] Hijacking not supported")
+		log.Println("Hijacking not supported")
 		http.Error(w, "Hijacking not supported", http.StatusInternalServerError)
 		return
 	}
@@ -76,7 +76,7 @@ func handleTunneling(w http.ResponseWriter, r *http.Request) {
 	//接管连接
 	client_conn, _, err := hijacker.Hijack()
 	if err != nil {
-		log.Printf("[proxy] hijacker.Hijack err: %+v", err)
+		log.Printf("hijacker.Hijack err: %+v", err)
 		http.Error(w, err.Error(), http.StatusServiceUnavailable)
 		return
 	}

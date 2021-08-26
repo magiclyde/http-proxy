@@ -22,30 +22,32 @@ var (
 )
 
 func init() {
-	log.Printf("[main] Git commit:%s\n", BuildVersion)
-	log.Printf("[main] Build time:%s\n", BuildDate)
+	log.SetPrefix("[http-proxy] ")
+	log.SetFlags(log.LstdFlags | log.Lshortfile)
+	log.Printf("Git commit:%s\n", BuildVersion)
+	log.Printf("Build time:%s\n", BuildDate)
 }
 
 func main() {
 	cfg := internal.NewConfig()
-	log.Printf("[main] cfg: %+v", cfg)
+	log.Printf("cfg: %+v", cfg)
 
 	server := &http.Server{
 		Addr:         ":" + strconv.Itoa(cfg.Port),
 		Handler:      &internal.Proxy{},
 		TLSNextProto: make(map[string]func(*http.Server, *tls.Conn, http.Handler)), // 关闭 http2
 	}
-	log.Printf("[main] ServeHttp on :%d\n", cfg.Port)
+	log.Printf("ServeHttp on :%d\n", cfg.Port)
 
 	switch cfg.Proto {
 	case "http":
-		log.Fatalf("[main] ListenAndServe.err: %+v", server.ListenAndServe())
+		log.Fatalf("ListenAndServe.err: %+v", server.ListenAndServe())
 
 	case "https":
-		log.Fatalf("[main] ListenAndServeTLS.err: %+v", server.ListenAndServeTLS(cfg.CertFile, cfg.KeyFile))
+		log.Fatalf("ListenAndServeTLS.err: %+v", server.ListenAndServeTLS(cfg.CertFile, cfg.KeyFile))
 
 	default:
-		log.Fatal("[main] Protocol must be either http or https")
+		log.Fatal("Protocol must be either http or https")
 	}
 
 }

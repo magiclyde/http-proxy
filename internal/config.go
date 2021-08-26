@@ -30,12 +30,12 @@ func NewConfig() *Config {
 	v.SetConfigName("http-proxy")
 	v.SetConfigType("yml")
 	if err := v.ReadInConfig(); err != nil {
-		log.Printf("[config] Read config err: %v, use default settings", err)
+		log.Printf("Read config err: %v, use default settings", err)
 	}
 
 	var cfg Config
 	if err := v.Unmarshal(&cfg); err != nil {
-		log.Fatalf("[config] Unmarshal config err: %+v", err)
+		log.Fatalf("Unmarshal config err: %+v", err)
 	}
 
 	return &cfg

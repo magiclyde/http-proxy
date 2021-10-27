@@ -11,6 +11,10 @@ http-proxy:
 	go build -ldflags "-X \"main.BuildVersion=${COMMIT_HASH}\" -X \"main.BuildDate=$(BUILD_DATE)\"" -o ./bin/http-proxy *.go
 	if test -x "${UPX}"; then ${UPX} ./bin/http-proxy; else echo "upx not found"; fi
 
+.PHONY: install-upx
+install-upx:
+	sudo apt install upx-ucl
+
 .PHONY: clean
 clean:
 	rm -f ./bin/http-proxy
